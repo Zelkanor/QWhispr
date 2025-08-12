@@ -33,7 +33,10 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
-
+.env
+.log
+/logs
+/.nx
 # System Files
 .DS_Store
 Thumbs.db
@@ -42,3 +45,5 @@ Thumbs.db
 .nx/workspace-data
 .cursor/rules/nx-rules.mdc
 .github/instructions/nx.instructions.md
+
+test-output

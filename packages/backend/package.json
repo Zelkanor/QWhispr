@@ -1,0 +1,75 @@
+{
+  "name": "@whispr/backend",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "targets": {
+      "build": {
+        "executor": "@nx/esbuild:esbuild",
+        "outputs": [
+          "{options.outputPath}"
+        ],
+        "defaultConfiguration": "production",
+        "options": {
+          "platform": "node",
+          "outputPath": "dist/packages/backend",
+          "format": [
+            "cjs"
+          ],
+          "bundle": true,
+          "main": "packages/backend/src/server.ts",
+          "tsConfig": "packages/backend/tsconfig.app.json",
+          "assets": [
+            "packages/backend/src/assets"
+          ],
+          "esbuildOptions": {
+            "sourcemap": true,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        },
+        "configurations": {
+          "development": {},
+          "production": {
+            "esbuildOptions": {
+              "sourcemap": false,
+              "outExtension": {
+                ".js": ".js"
+              }
+            }
+          }
+        }
+      },
+      "serve": {
+        "continuous": true,
+        "executor": "@nx/js:node",
+        "defaultConfiguration": "development",
+        "dependsOn": [
+          {
+            "target": "build",
+            "projects": "self",
+            "params": "forward"
+          }
+        ],
+        "options": {
+          "buildTarget": "@whispr/backend:build",
+          "runBuildTargetDependencies": false
+        },
+        "configurations": {
+          "development": {
+            "buildTarget": "@whispr/backend:build:development"
+          },
+          "production": {
+            "buildTarget": "@whispr/backend:build:production"
+          }
+        }
+      },
+      "test": {
+        "options": {
+          "passWithNoTests": true
+        }
+      }
+    }
+  }
+}
